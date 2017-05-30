@@ -1,6 +1,7 @@
 FROM centos
 RUN yum -y update
 RUN yum install java-1.8.0-openjdk
+RUN wget http://download.jboss.org/wildfly/10.1.0.Final/wildfly-10.1.0.Final.zip
 RUN yum install -y wildfly
 ADD mkdir -p /opt/wildfly
 RUN cd /opt/
