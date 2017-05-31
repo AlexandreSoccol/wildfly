@@ -11,6 +11,8 @@ RUN cd $HOME \
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 EXPOSE 8080
 
+RUN chkconfig wildfly on
+
 
 
 
