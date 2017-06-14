@@ -10,7 +10,7 @@ RUN cd $HOME \
     && rm wildfly-$WILDFLY_VERSION.tar.gz
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 CMD ["/opt/wildfly/bin/standalone.sh" "-b", "0.0.0.0"]
-EXPOSE 8080
+EXPOSE 9990
 
 
 
