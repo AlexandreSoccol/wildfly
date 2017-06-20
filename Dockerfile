@@ -1,16 +1,29 @@
-FROM jboss/base-jdk:8
-ENV WILDFLY_VERSION 10.0.0.Final
-ENV WILDFLY_SHA1 c0dd7552c5207b0d116a9c25eb94d10b4f375549
-ENV JBOSS_HOME /opt/jboss/wildfly
-RUN cd $HOME \
-    && curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
-    && sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
-    && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
-    && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
-    && rm wildfly-$WILDFLY_VERSION.tar.gz
-ENV LAUNCH_JBOSS_IN_BACKGROUND true
-CMD ["/opt/wildfly/bin/standalone.sh" "-b", "0.0.0.0"]
-EXPOSE 9990
+wildfly:
+  build: ./wildfly
+  container_name: "wildfly"
+  ports:
+    - "8080:8080"
+    - "9990:9990"
+  volumes:
+    - "./helloworld/deployments:/opt/jboss/wildfly/standalone/deployments"
+
+postgres:
+  image: postgres:9.5
+  container_name: "postgres"
+  volumes:
+    - "./postgres:/docker-entrypoint-initdb.d"
+  environment:
+    - "POSTGRES_PASSWORD=postgres"
+    - "PGPASSWORD=postgres"
+
+# ActiveMQ:61616 => "admin":"adminactivemq"
+# ActiveMQWeb:8161 => "admin":"admin"
+activemq:
+  image: rmohr/activemq:5.10.0
+  container_name: "activemq"
+  ports:
+    - "61616:61616"
+    - "8161:8161
 
 
 
