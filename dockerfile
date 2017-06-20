@@ -23,7 +23,7 @@ activemq:
   container_name: "activemq"
   ports:
     - "61616:61616"
-    - "8161:8161
+    - "8161:8161"
 
 
 
